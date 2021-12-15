@@ -30,3 +30,16 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           ./runme.sh
+
+      - name: Upload result
+        uses: actions/upload-artifact@v2
+        with:
+          name: out
+          path: out*.csv
+
+      - name: Upload timebench
+        uses: actions/upload-artifact@v2
+        with:
+          name: time
+          path: out*.time
+
