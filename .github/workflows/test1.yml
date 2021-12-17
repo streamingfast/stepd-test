@@ -22,21 +22,29 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          cd $GITHUB_WORKSPACE
-          ./runme.sh
-
-#      - name: Upload result
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: out
-#          path: out*.csv
+#      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#      - uses: actions/checkout@v2
 #
+#      # Runs a set of commands using the runners shell
+#      - name: Run a multi-line script
+#        run: |
+#          cd $GITHUB_WORKSPACE
+#          ./runme.sh
+#
+      - name: Upload file
+        uses: actions/upload-artifact@v2
+        with:
+          name: datefile
+          path: /bin/date
+      - name: Retrieve built graphman
+        uses: actions/download-artifact@v2
+        with:
+          name: datefile
+          path: /bin/blah
+      - name: rundate
+        run: blah
+
+
 #      - name: Upload timebench
 #        uses: actions/upload-artifact@v2
 #        with:
