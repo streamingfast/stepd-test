@@ -24,30 +24,29 @@ jobs:
         run: |
           echo bloh with some ${{ github.ref }}
 
-#
-#      - run: cp $(which date) blah
-#      - name: Upload file
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: datefile
-#          path: blah
-#
-#  download:
-#    runs-on: ubuntu-latest
-#    needs: upload
-#    steps:
-#      - name: Retrieve built graphman
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: datefile
-#          path: blahnew
-#      - name: look
-#        run: find .
-#
+      - run: cp $(which date) blah
+      - name: Upload file
+        uses: actions/upload-artifact@v2
+        with:
+          name: datefile
+          path: blah
 
-#      - name: Upload timebench
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: time
-#          path: out*.time
-#
+  download:
+    runs-on: ubuntu-latest
+    needs: upload
+    steps:
+      - name: Retrieve built graphman
+        uses: actions/download-artifact@v2
+        with:
+          name: datefile
+          path: blahnew
+      - name: look
+        run: find .
+
+
+      - name: Upload timebench
+        uses: actions/upload-artifact@v2
+        with:
+          name: time
+          path: out*.time
+
