@@ -11,9 +11,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        binary: [geth, bsc, polygon]
+#    strategy:
+#      matrix:
+#        binary: [geth, bsc, polygon]
 
     outputs:
       tags: ${{ steps.meta.outputs.outs }}
@@ -21,7 +21,8 @@ jobs:
     steps:
       - name: some echo
         id: meta
-        run: echo '::set-output name=outs::${{ matrix.binary }}-latest'
+#        run: echo '::set-output name=outs::${{ matrix.binary }}-latest'
+        run: echo '::set-output name=outs::something-latest'
 
   download:
     runs-on: ubuntu-latest
