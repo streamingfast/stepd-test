@@ -6,8 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    tags: '*'
-    tags-ignore: 'pre-*'
+    tags: 
+      - '*'
+      - '!pre-*'
 
 jobs:
   somethest:
