@@ -28,6 +28,6 @@ jobs:
     needs: somethest
     steps:
       - name: echo blah
-        run: echo ${{needs.somethest.outputs.outs]}}
+        run: echo ${{ needs.somethest.outputs.outs }}
 
 
