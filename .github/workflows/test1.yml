@@ -52,4 +52,6 @@ jobs:
     needs: job1
     steps:
       - run: |
-          echo this is here: "${{ needs.job1.outputs.tags[0] }}" multi: "${{ needs.job1.outputs.tags }}"
+          echo SF_VERSION=$(echo ${{ needs.job1.outputs.tags }} | head -n 1) >> $GITHUB_ENV
+      - run: |
+          echo this is here: ${{ env.SF_VERSION }}
