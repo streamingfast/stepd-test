@@ -9,13 +9,14 @@ on:
         type: string
 
 jobs:
-  job2:
+  job1:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         binary: ${{ fromJSON(github.event.inputs.flavors) }}
     steps:
-      - run: |
+      - id: print
+        run: |
           OUT="blahblah
           blibloh
           bluh"
@@ -24,3 +25,15 @@ jobs:
           OUT="${OUT//$'\r'/' '}"
           echo "${{ matrix.binary }}=$OUT"
           echo "${{ matrix.binary }}=$OUT" >> $GITHUB_OUTPUT
+
+    outputs:
+      geth: ${{ steps.print.outputs.geth }}
+      bsc: ${{ steps.print.outputs.bsc }}
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      run: |
+        echo ${{ needs.job1.outputs.geth }}
+        echo ${{ needs.job1.outputs.bsc }}
