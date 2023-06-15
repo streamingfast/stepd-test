@@ -15,12 +15,12 @@ jobs:
       matrix:
         binary: ${{ fromJSON(github.event.inputs.flavors) }}
     steps:
-      run: |
-        OUT="blahblah
-        blibloh
-        bluh"
-        OUT="${OUT//'%'/'%25'}"
-        OUT="${OUT//$'\n'/' '}"
-        OUT="${OUT//$'\r'/' '}"
-        echo "${{ matrix.binary }}=$OUT"
-        echo "${{ matrix.binary }}=$OUT" >> $GITHUB_OUTPUT
+      - run: |
+          OUT="blahblah
+          blibloh
+          bluh"
+          OUT="${OUT//'%'/'%25'}"
+          OUT="${OUT//$'\n'/' '}"
+          OUT="${OUT//$'\r'/' '}"
+          echo "${{ matrix.binary }}=$OUT"
+          echo "${{ matrix.binary }}=$OUT" >> $GITHUB_OUTPUT
