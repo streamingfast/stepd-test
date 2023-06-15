@@ -1,57 +1,17 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the workflow will run
-on:
-  push
-
-#jobs:
-#  somethest:
-#    # The type of runner that the job will run on
-#    runs-on: ubuntu-latest
-#
-##    strategy:
-##      matrix:
-##        binary: [geth, bsc, polygon]
-#
-#    outputs:
-#      tags: ${{ steps.meta.outputs.outs }}
-#
-#    steps:
-#      - name: some echo
-#        id: meta
-##        run: echo '::set-output name=outs::${{ matrix.binary }}-latest'
-#        run: echo '::set-output name=outs::something-latest'
-#
-#  download:
-#    runs-on: ubuntu-latest
-#    needs: somethest
-#    steps:
-#      - name: echo blah
-#        run: echo ${{ needs.somethest.outputs.outs }}
-#
+name: build
+on: push
 jobs:
   job1:
     runs-on: ubuntu-latest
     outputs:
-      tags: ${{ steps.meta.outputs.tags }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - name: Generate docker tags/labels from github build context
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: stepd
-          tags: |
-            type=sha,prefix=,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,enable=${{ github.ref == 'refs/heads/main' }},value=main
-          flavor: latest=${{ startsWith(github.ref, 'refs/tags/') }}
-
+      - id: set-matrix
+        run: echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
   job2:
-    runs-on: ubuntu-latest
     needs: job1
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.job1.outputs.matrix) }}
     steps:
-      - run: |
-          echo SF_VERSION=$(echo "${{ needs.job1.outputs.tags }}" | head -n 1) >> $GITHUB_ENV
-      - run: |
-          echo this is here: ${{ env.SF_VERSION }}
+      - run: build
